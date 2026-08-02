@@ -9,28 +9,30 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
+      - uses: actions/checkout@v4
+      
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-
-      - name: Install system dependencies
+      
+      - name: Install dependencies
         run: |
           sudo apt update
           sudo apt install -y autoconf automake libtool pkg-config
-          sudo apt install -y aidl
-
+          sudo apt install -y aidl android-sdk-build-tools
+      
+      - name: Set Android SDK path
+        run: |
+          echo "ANDROID_HOME=/usr/local/lib/android/sdk" >> $GITHUB_ENV
+          echo "PATH=$PATH:/usr/local/lib/android/sdk/build-tools/33.0.0" >> $GITHUB_ENV
+      
       - name: Install buildozer
-        run: |
-          pip install --upgrade buildozer cython
-
+        run: pip install buildozer cython
+      
       - name: Build APK
-        run: |
-          buildozer -v android debug
-
+        run: buildozer android debug
+      
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
