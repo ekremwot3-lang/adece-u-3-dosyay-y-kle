@@ -11,10 +11,11 @@ requirements = python3,kivy
 orientation = portrait
 
 android.bootstrap = sdl2
-android.api = 30
+android.api = 33
 android.minapi = 21
+android.sdk_path = /usr/local/lib/android/sdk
 android.ndk_api = 21
-android.sdk = 30
+android.sdk = 33
 android.archs = arm64-v8a
 
 [buildozer]
